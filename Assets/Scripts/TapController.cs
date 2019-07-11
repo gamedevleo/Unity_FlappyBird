@@ -13,6 +13,10 @@ public class TapController : MonoBehaviour
     public float tiltSmooth = 5;
     public Vector3 startPos;
 
+    public AudioSource tapAudio;
+    public AudioSource scoreAudio;
+    public AudioSource dieAudio;
+
     Rigidbody2D rb;
     Quaternion downRotation;
     Quaternion forwardRotation;
@@ -56,6 +60,7 @@ public class TapController : MonoBehaviour
 
         if(Input.GetMouseButtonDown(0))
         {
+            tapAudio.Play();
             transform.rotation = forwardRotation;
             rb.velocity = Vector3.zero;
             rb.AddForce(Vector2.up * tapForce, ForceMode2D.Force);
@@ -70,11 +75,13 @@ public class TapController : MonoBehaviour
         if (other.gameObject.tag == "ScoreZone")
         {
             OnPlayerScored();
+            scoreAudio.Play();
         }
         if (other.gameObject.tag == "DeadZone")
         {
             rb.simulated = false;
             OnPlayerDied();
+            dieAudio.Play();
         }
     }
 
